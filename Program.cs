@@ -310,12 +310,6 @@ namespace ScrewllumBot
             result.color = new Color(204, 204, 204);
             AllResults.allResults.Add(result);
 
-            result.name = "Aki";
-            result.imageURL = "https://cdn.discordapp.com/attachments/1243882875913502720/1285223145187442772/ArtismDraws_Aki_SS_1.png?ex=66e97cd4&is=66e82b54&hm=e66d1765ff6739066139b330a37c27feabd0786727de7c5f14684a938dd42780&";
-            result.reaction = "Demon cutie";
-            result.color = new Color(240, 218, 218);
-            AllResults.allResults.Add(result);
-
             result.name = "Yumeko";
             result.imageURL = "https://cdn.tupperbox.app/pfp/904745046329397249/m9VFIEfxmx05k-_j.webp";
             result.reaction = "Time travelling cutie";
@@ -467,7 +461,7 @@ namespace ScrewllumBot
             AllResults.allResults.Add(result);
 
             result.name = "Frogs";
-            result.imageURL = "https://cdn.discordapp.com/attachments/1173422620964831334/1286102518518251590/Projeto_09-18_HD720p_LOW_FR30_2-ezgif.com-video-to-gif-converter.gif?ex=66ecafcf&is=66eb5e4f&hm=22fe579d1b8c977e51185aeaa019d015ab44e5c163986cb7c69f702564c1815f&";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1285365379438477403/1286229710463832155/Frogs.gif?ex=66ed2643&is=66ebd4c3&hm=fee2beccfeb2c27f9c757ffb0f46e70126efeed8baf3ca480948736592d29c4c&";
             result.reaction = "It is Wednesday, my dudes";
             result.color = new Color(171, 135, 77);
             AllResults.allResults.Add(result);
@@ -491,6 +485,7 @@ namespace ScrewllumBot
     public static class AllResults
     {
         public static Dictionary<SocketGuildUser, DateTimeOffset> cooldowns = new Dictionary<SocketGuildUser, DateTimeOffset>();
+        public static Dictionary<ulong, int> pulls = new Dictionary<ulong, int>();
         public static List<GambleResult> allResults = new List<GambleResult>();
         public static string[] blacklist;
 
@@ -687,8 +682,9 @@ namespace ScrewllumBot
     public class SlashCommands : InteractionModuleBase
     {
         int buddyzoneCommandsCooldown = 30;
+
         [SlashCommand("pull", "Do some gambling")]
-        public async Task Pull()
+        public async Task Pull()    
         {
             if (Context.Channel.Id == 1171251045947682876)
             {
@@ -712,7 +708,35 @@ namespace ScrewllumBot
             {
                 AllResults.cooldowns.Add(Context.User as SocketGuildUser, DateTimeOffset.UtcNow);
             }
-            Console.WriteLine($"{Context.User.Username} used /pull in #{Context.Channel.Name}");
+
+            foreach (string line in System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt"))
+            {
+                string[] separate = line.Split(' ');
+                if (separate[0] == Context.User.Id.ToString())
+                {
+                    DateTimeOffset lastUsed = new DateTimeOffset(long.Parse(separate[1]), new TimeSpan(0));
+                    if (lastUsed.AddHours(12) >= DateTimeOffset.UtcNow)
+                    {
+                        await RespondAsync($"Take a break. You have {(DateTimeOffset.UtcNow - lastUsed).TotalHours} hours left.", ephemeral: true);
+                        return;
+                    }
+                    else
+                    {
+                        var lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt");
+                        var newLines = lines.Select(oneLine => Regex.Replace(oneLine, $"\\s*{Context.User.Id.ToString()}.*", string.Empty));
+                        System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", newLines);
+                    }
+                    break;
+                }
+            }
+
+            if (!AllResults.pulls.ContainsKey(Context.User.Id))
+            {
+                Console.WriteLine("Their first pull");
+                AllResults.pulls.Add(Context.User.Id, 0);
+            }
+
+            Console.WriteLine($"{Context.User.Username} used /pull in #{Context.Channel.Name} at {DateTimeOffset.UtcNow.ToString()}. They've done {AllResults.pulls[Context.User.Id]} pulls so far");
 
             Random random = new Random();
             EmbedBuilder gachaEmbed = new EmbedBuilder();
@@ -725,6 +749,7 @@ namespace ScrewllumBot
             gachaEmbed.WithFooter(gachaFooter);
             gachaEmbed.ImageUrl = "https://media1.tenor.com/m/Cv02PNW6okUAAAAd/star-rail-pull-animation-honkai-star-rail.gif";
             await RespondAsync(embed: gachaEmbed.Build());
+            AllResults.pulls[Context.User.Id]++;
 
             await Task.Delay(7500);
 
@@ -735,7 +760,25 @@ namespace ScrewllumBot
             gachaFooter.WithText("Used by " + Context.User.Username);
             gachaFooter.WithIconUrl(Context.User.GetAvatarUrl());
             gachaEmbed.WithFooter(gachaFooter);
-            if (random.Next(100) == 0 && Context.Guild.Id == 1171235275020714036)
+
+
+            if (AllResults.pulls[Context.User.Id] == 40)
+            {
+                using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", true))
+                {
+                    file.WriteLine($"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks.ToString()}");
+                    file.Close();
+                }
+
+                gachaEmbed.Title = $"Take a break, {(Context.User as SocketGuildUser).DisplayName}.";
+                gachaEmbed.ImageUrl = "https://media1.tenor.com/m/HItBOocy6ikAAAAC/umaru-sleeping.gif";
+                gachaEmbed.Description = "You can't pull for the next **12** hours. Gambling addiction is bad.";
+                gachaEmbed.Color = new Color(74, 81, 99);
+                await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
+
+                AllResults.pulls[Context.User.Id] = 0;
+            }
+            if (random.Next(40) == 0 && Context.Guild.Id == 1171235275020714036)
             {
                 await AllResults.ReassignSupremeGambler(Context.User, Context.Guild);
                 gachaEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} has become the Supreme Gambler";

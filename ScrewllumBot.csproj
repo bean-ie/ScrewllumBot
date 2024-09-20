@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="blacklist.txt" />
+    <Content Include="gachatimeout.txt" />
     <Content Include="supremegambler.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
