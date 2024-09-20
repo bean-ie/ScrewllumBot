@@ -17,6 +17,9 @@ using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
+using System.Net.Http;
+using System.IO.Packaging;
+using System.Drawing;
 
 namespace ScrewllumBot
 {
@@ -615,28 +618,31 @@ namespace ScrewllumBot
             "USER_2 is USER_1's parent",
             "USER_1 and USER_2 are siblings",
             "USER_1 and USER_2 are just friends",
-            "USER_1 and USER_2 are having sex",
             "USER_1 and USER_2 are strangers",
-            "USER_1 and USER_2 are siblings, having sex",
             "USER_1 and USER_2 are different species",
             "USER_1 and USER_2 are ex lovers",
             "USER_1 and USER_2 are married",
             "USER_1 and USER_2 are dating",
             "USER_1 and USER_2 are fighting to death",
-            "USER_1 and USER_2 had a one-night stand and that's it",
-            "USER_1 and USER_2 are rizzing each other's ohio",
-            "USER_1 and USER_2 are fucking 24/7",
             "USER_2 is USER_1's grandparent",
             "USER_1 and USER_2 are playing UNO together",
             "USER_1 and USER_2 are yapping buddies",
             "USER_1 and USER_2 are on a Crusade together",
             "USER_1 and USER_2 are reading peak fiction together",
-            "USER_1 and USER_2 are friends with benefits",
-            "USER_1 and USER_2 are gooning 24/7",
             "USER_1 and USER_2 are frauds",
             "USER_1 and USER_2 are mahjong buddies",
             "USER_2 killed USER_1 while drunk driving",
             "USER_2 murdered USER_1"
+        };
+
+        public readonly static string[] nsfwRelationships = new string[]
+        {
+            "USER_1 and USER_2 are having sex",
+            "USER_1 and USER_2 are siblings, having sex",
+            "USER_1 and USER_2 had a one-night stand and that's it",
+            "USER_1 and USER_2 are rizzing each other's ohio",
+            "USER_1 and USER_2 are friends with benefits",
+            "USER_1 and USER_2 are gooning 24/7",
         };
 
         public static int punchCounter = 0;
@@ -676,6 +682,17 @@ namespace ScrewllumBot
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public static async Task<Stream> GetStreamFromUrl(string url)
+        {
+            byte[] imageData = null;
+            using (var wc = new System.Net.WebClient())
+            {
+                imageData = await wc.DownloadDataTaskAsync(new Uri(url));
+            }
+
+            return new MemoryStream(imageData);
         }
     }
 
@@ -717,7 +734,7 @@ namespace ScrewllumBot
                     DateTimeOffset lastUsed = new DateTimeOffset(long.Parse(separate[1]), new TimeSpan(0));
                     if (lastUsed.AddHours(12) >= DateTimeOffset.UtcNow)
                     {
-                        await RespondAsync($"Take a break. You have {(DateTimeOffset.UtcNow - lastUsed).TotalHours} hours left.", ephemeral: true);
+                        await RespondAsync($"Take a break. Your break will end on <t:{lastUsed.AddHours(12).ToUnixTimeSeconds()}>.", ephemeral: true);
                         return;
                     }
                     else
@@ -777,6 +794,7 @@ namespace ScrewllumBot
                 await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
 
                 AllResults.pulls[Context.User.Id] = 0;
+                return;
             }
             if (random.Next(40) == 0 && Context.Guild.Id == 1171235275020714036)
             {
@@ -1245,6 +1263,31 @@ namespace ScrewllumBot
             }
             Console.WriteLine($"{Context.User.Username} used /fate in #{Context.Channel.Name}");
 
+            string[] responses = AllResults.relationships;
+            string[] nsfwResponses = AllResults.relationships.Concat(AllResults.nsfwRelationships).ToArray();
+
+            bool contextUserOptedIn = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(Context.User.Id.ToString());
+            bool contextUserOptedInWithTarget = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(Context.User.Id.ToString() + " " + user.Id.ToString());
+            bool targetOptedIn = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(user.Id.ToString());
+            bool targetOptedInWithContextUser = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(user.Id.ToString() + " " + Context.User.Id.ToString());
+
+            if (targetOptedIn && contextUserOptedIn)
+            {
+                responses = nsfwResponses;
+            }
+            else if (targetOptedIn && contextUserOptedInWithTarget)
+            {
+                responses = nsfwResponses;
+            }
+            else if (targetOptedInWithContextUser && contextUserOptedIn)
+            {
+                responses = nsfwResponses;
+            }
+            else if (targetOptedInWithContextUser && contextUserOptedInWithTarget)
+            {
+                responses = nsfwResponses;
+            }
+
             EmbedBuilder embed = new EmbedBuilder();
 
             Random random = new Random();
@@ -1267,11 +1310,12 @@ namespace ScrewllumBot
             if ((Context.User.Username == "march7thfan_" && user.Username == "seelesrightboob")
                 || (Context.User.Username == "seelesrightboob" && user.Username == "march7thfan_"))
             {
-                embed.Title = (Context.User as SocketGuildUser).DisplayName + " and " + (user as SocketGuildUser).DisplayName + " are dating";
+                embed.Title = "Cyno and Sora are dating";
+                embed.Description = "...in every universe";
             }
             else
             {
-                string finalString = AllResults.relationships[relationshipRandom.Next(AllResults.relationships.Length)];
+                string finalString = responses[relationshipRandom.Next(responses.Length)];
                 finalString = Regex.Replace(finalString, "USER_1", (Context.User as SocketGuildUser).DisplayName);
                 finalString = Regex.Replace(finalString, "USER_2", (user as SocketGuildUser).DisplayName);
                 embed.Title = finalString;
@@ -1279,6 +1323,45 @@ namespace ScrewllumBot
             embed.Description = "...in most parallel worlds";
 
             await RespondAsync(embed: embed.Build());
+        }
+
+        [SlashCommand("sgicon", "Change the icon of the Supreme Gambler role, if you have it")]
+        public async Task SGIcon(string url)
+        {
+            IRole role = null;
+            try
+            {
+                role = await Context.Guild.GetRoleAsync(1285960546365214832);
+            }
+            catch (Exception e)
+            {
+                await RespondAsync(e.ToString());
+            }
+            if ((Context.User as SocketGuildUser).Roles.Any(r => r.Id == 1285960546365214832))
+            {
+                try
+                {
+                    Stream imageStream = await AllResults.GetStreamFromUrl(url);
+                    Image iconImage = new Image(imageStream);
+                    await role.ModifyAsync(r => r.Icon = iconImage);
+                    await RespondAsync("Changed", ephemeral: true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    await RespondAsync(e.ToString());
+                }
+            }
+            else
+            {
+                await RespondAsync("You are not the Supreme Gambler.", ephemeral: true);
+            }
+        }
+
+        [SlashCommand("test", "Test command")]
+        public async Task Test(string url)
+        {
+            await RespondAsync("nothing to test rn", ephemeral: true);
         }
 
         [SlashCommand("optout", "Prevent others from using the bot with you")]
@@ -1342,6 +1425,69 @@ namespace ScrewllumBot
                 System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\blacklist.txt", newLines);
                 AllResults.blacklist = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\blacklist.txt");
                 await RespondAsync("*You have been opted in.*", ephemeral: true);
+            }
+        }
+
+        [SlashCommand("nsfwoptin", "Allow NSFW results to appear in /fate for you")]
+        public async Task NSFWOptIn(IUser user = null)
+        {
+            Console.WriteLine($"{Context.User.Username} used /nsfwoptin in #{Context.Channel.Name}");
+            string fullId = Context.User.Id.ToString();
+            if (user != null)
+            {
+                fullId += " " + user.Id.ToString();
+            }
+            if (System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(fullId))
+            {
+                if (user == null)
+                    await RespondAsync("*You are already opted in.*", ephemeral: true);
+                else
+                    await RespondAsync("*You've already opted in with that user.*", ephemeral: true);
+            }
+            else
+            {
+                using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt", true))
+                {
+                    try
+                    {
+                        file.WriteLine(fullId);
+                        file.Close();
+                        if (user == null)
+                            await RespondAsync("*You have been opted in.*", ephemeral: true);
+                        else
+                            await RespondAsync("*You have been opted in with that user.*", ephemeral: true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        await RespondAsync(e.ToString(), ephemeral: true);
+                    }
+                }
+            }
+        }
+
+        [SlashCommand("nsfwoptout", "Prevent NSFW results to appear in /fate for you")]
+        public async Task NSFWOptOut(IUser user = null)
+        {
+            Console.WriteLine($"{Context.User.Username} used /nsfwoptout in #{Context.Channel.Name}");
+            string fullId = Context.User.Id.ToString();
+            if (user != null)
+            {
+                fullId += " " + user.Id.ToString();
+            }
+            if (!System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt").Contains(fullId))
+            {
+                if (user == null)
+                    await RespondAsync("*You are already opted out.*", ephemeral: true);
+                else
+                    await RespondAsync("*You've already opted out with that user.*", ephemeral: true);
+            }
+            else
+            {
+                var whitelist = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt");
+                var newLines = whitelist.Select(line => Regex.Replace(line, $"^{fullId}\\s*$", string.Empty, RegexOptions.IgnoreCase));
+                System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\nsfwoptin.txt", newLines);
+                await RespondAsync("*You have been opted out.*", ephemeral: true);
             }
         }
     }
