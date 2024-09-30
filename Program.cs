@@ -20,6 +20,9 @@ using System.Xml.XPath;
 using System.Net.Http;
 using System.IO.Packaging;
 using System.Drawing;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.InteropServices;
+using System.Net.Mail;
 
 namespace ScrewllumBot
 {
@@ -61,7 +64,10 @@ namespace ScrewllumBot
             string token = System.IO.File.ReadAllText("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\token.txt");
             await this.client.LoginAsync(Discord.TokenType.Bot, token);
             CreateAllResults();
+            CreateNewResults();
+            CreateStonehearts();
             Console.WriteLine("There are currently " + AllResults.allResults.Count + " different things you can pull.");
+            Console.WriteLine($"There are {AllResults.RemainingSupremeGamblers()} Supreme Gamblers left.");
             await Task.Delay(-1);
         }
 
@@ -152,7 +158,7 @@ namespace ScrewllumBot
             AllResults.allResults.Add(result);
 
             result.name = "Ei";
-            result.imageURL = "https://cdn.discordapp.com/avatars/152688716844892161/22b41ed579aaaee9fe57ea4bbe84cdbd.png?size=1024";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1286801789458579497/1286828023278207017/image.png?ex=66ef537c&is=66ee01fc&hm=5d5cae0c20fdb3acc65158f665b7b17f76e3ba538b8a9b47911abacffcdf56ac&";
             result.reaction = "Trusty bar owner";
             result.color = new Color(132, 0, 255);
             AllResults.allResults.Add(result);
@@ -468,6 +474,282 @@ namespace ScrewllumBot
             result.reaction = "It is Wednesday, my dudes";
             result.color = new Color(171, 135, 77);
             AllResults.allResults.Add(result);
+
+            result.name = "Sethos";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1283852708654354543/1286803213055688704/1905CED7-B626-40E4-8595-4E06B9FB2A82.jpg?ex=66ef3c61&is=66edeae1&hm=7406916c2a4b50e7acc2a211587373d9b104c60c56f78726fdc580a42a1761f7&";
+            result.reaction = "Sunday chaser";
+            result.color = new Color(194, 105, 16);
+            AllResults.allResults.Add(result);
+        }
+
+        void CreateNewResults()
+        {
+            GambleResult result = new GambleResult();
+
+            result.name = "Pipebomb";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1251236009136357416/1287755711400644628/poll-what-is-your-favourite-healer-for-furina-and-what-v0-vsglfbxg7vuc1.jpg?ex=66f2b376&is=66f161f6&hm=e7cadb978881bc8c3aa96b81e882a33cc3f5129cc604a462c9c1d6415a8602a3&";
+            result.reaction = "WOE";
+            result.color = new Color(63, 62, 140);
+            AllResults.newResults.Add(result);
+
+            result.name = "Wincest";
+            result.imageURL = "https://s1.zerochan.net/Honkai.Star.Rail.600.4088562.jpg";
+            result.reaction = "Keeping it in the family";
+            result.color = new Color(222, 222, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Shiroko Terror";
+            result.imageURL = "https://cdn.donmai.us/original/1e/df/__shiroko_and_shiroko_terror_blue_archive_drawn_by_m_r_b__1edf0a0b471bf9dccb0a18bd702ef49d.jpg";
+            result.reaction = "Traumatized cutie";
+            result.color = new Color(209, 209, 227);
+            AllResults.newResults.Add(result);
+
+            result.name = "ForRealium";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1251236009136357416/1287759695192264804/RDT_20240920_2151294061859324892751103.jpg?ex=66f2b72c&is=66f165ac&hm=9e96b5d6e4a521affa4486146e02e84d898b9bf498e791aae9f334736ccdaf28&";
+            result.reaction = "ong?";
+            result.color = new Color(255, 255, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Headpatting Shiroko";
+            result.imageURL = "https://cdn.donmai.us/original/0e/b9/__shiroko_blue_archive_drawn_by_haraheriei__0eb9a6d25ada00b190a871a5ba1e0932.png";
+            result.reaction = "You just headpatted the Shirocutie!";
+            result.color = new Color(23, 247, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Dr. Ratioed";
+            result.imageURL = "https://i.redd.it/2usrhhoo6l6c1.jpeg";
+            result.reaction = "Genshin could never";
+            result.color = new Color(95, 95, 237);
+            AllResults.newResults.Add(result);
+
+            result.name = "Live Ajaw Reaction";
+            result.imageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhaxZrzHorKgAB7bbei0C88eNPZduFTHQRLEB2j54EXLAFjLpixqag1vsP&s=10";
+            result.reaction = "\"A-jaw dropping pull\" - Cyno";
+            result.color = new Color(219, 255, 38);
+            AllResults.newResults.Add(result);
+
+            result.name = "Hunter Gaul";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1232034635169402971/1287764444025458739/83c2d6f20f8bc9457a9e6ff70f6ba2fd.png?ex=66f2bb98&is=66f16a18&hm=932098940179f10d620b82fb38bfbe967208f52887b2f5694cfc428480076c33&";
+            result.reaction = "In my defense the S in \"Slay the monster\" was missing";
+            result.color = new Color(176, 28, 5);
+            AllResults.newResults.Add(result);
+
+            result.name = "Ei's Cooking";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1286801789458579497/1287860195787018372/20231207_112119-2.jpg?ex=66f314c5&is=66f1c345&hm=5c2d60ef2675ea642054167a1e9211b13496c1c36b8ad8fae649b1c80f1f925e&";
+            result.reaction = "Canon Ei moment";
+            result.color = new Color(255, 247, 219);
+            AllResults.newResults.Add(result);
+
+            result.name = "Gissing";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1251236009136357416/1287757529874563194/image-32.png?ex=66f406a8&is=66f2b528&hm=375fdc6af1d708f45c4703c1256911f6696424c7a84d686a35d12ada9529c8b8&";
+            result.reaction = "Jump in here!";
+            result.color = new Color(67, 142, 247);
+            AllResults.newResults.Add(result);
+
+            result.name = "Venting Machine";
+            result.imageURL = "https://preview.redd.it/venting-machine-v0-19qmmfmhv6nd1.png?width=1080&crop=smart&auto=webp&s=40f9f8652f447fb7151ec4a2d8dbf8e539254ce0";
+            result.reaction = "What should I buy...";
+            result.color = new Color(60, 163, 114);
+            AllResults.newResults.Add(result);
+
+            result.name = "Foxian Beauties Near You";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1283852708654354543/1288207327308152863/840EAC0D-47DD-4E83-BC78-EEB3E5ECA119.jpg?ex=66f45810&is=66f30690&hm=85de2a0e4a4a8c83587e49079325b78a00ef7cba33aded795c56a1d09fd1b839&";
+            result.reaction = "CLICK NOW CLICK NOW CLICK NOW";
+            result.color = new Color(48, 219, 168);
+            AllResults.newResults.Add(result);
+
+            result.name = "Hoshino";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1251236009136357416/1287765010919194664/Screenshot_20240923-211808.jpg?ex=66f40da0&is=66f2bc20&hm=7431e5244be5b0e18eb7cd9877719829b620313ce93d769046c26d82a3e707d5&";
+            result.reaction = "*honk shoo honk shoo*";
+            result.color = new Color(255, 171, 231);
+            AllResults.newResults.Add(result);
+
+            result.name = "Ben";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1283852708654354543/1288207328205737994/IMG_1363.jpg?ex=66f45810&is=66f30690&hm=6bdfb62fa85d17d9628620d52ef420293eb650c2010f3ed36fc87ce111bd80f3&";
+            result.reaction = "You know what you did...";
+            result.color = new Color(84, 45, 0);
+            AllResults.newResults.Add(result);
+
+            result.name = "Saturday";
+            result.imageURL = "https://media1.tenor.com/m/u-7y_HU0mXkAAAAC/sunday-hsr.gif";
+            result.reaction = "He IS dropping soon";
+            result.color = new Color(255, 255, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "The Battle Maid Army";
+            result.imageURL = "https://preview.redd.it/time-for-some-changes-in-the-ten-lords-commission-v0-vx8afpkyi3fc1.png?width=1330&format=png&auto=webp&s=21eb3d128ea0773c0478b164eb55bc320f86fbcf";
+            result.reaction = "Luofu peakest army";
+            result.color = new Color(247, 57, 57);
+            AllResults.newResults.Add(result);
+
+            result.name = "Nerfcent";
+            result.imageURL = "https://safebooru.org//images/4619/5290522977f1aacb3c28f16b3ff199b04f120cb6.jpg?5150161";
+            result.reaction = "The Secret Dev... ~~But not of this bot~~";
+            result.color = new Color(255, 255, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Yae Miko in Hu Tao cosplay";
+            result.imageURL = "https://cdn.donmai.us/original/c1/e5/__hu_tao_and_boo_tao_genshin_impact_drawn_by_shuvalun8__c1e5a9ea457e78a9d4c09d092b7dec1d.jpg";
+            result.reaction = "Get in the box.";
+            result.color = new Color(59, 11, 0);
+            AllResults.newResults.Add(result);
+
+            result.name = "Venti in Xingqiu cosplay";
+            result.imageURL = "https://i.redd.it/aa103lw5vrj71.jpg";
+            result.reaction = "Blue haired twink cosplays blue haired twink";
+            result.color = new Color(85, 154, 207);
+            AllResults.newResults.Add(result);
+
+            result.name = "The Everflame Mansion";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/7/73/HoYoLAB_Article_Header_Annihilation_Gang.png/revision/latest/scale-to-width-down/1000?cb=20240119050932";
+            result.reaction = "Can't wait to pull for them in 7.2!";
+            result.color = new Color(105, 0, 0);
+            AllResults.newResults.Add(result);
+
+            result.name = "<:balls:1288257347755573369>";
+            result.imageURL = "https://cdn.7tv.app/emote/624c6b32e236ca9775ecbaa1/4x.webp";
+            result.reaction = "<:balls:1288257347755573369>";
+            result.color = new Color(0, 5, 107);
+            AllResults.newResults.Add(result);
+
+            result.name = "ORT";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1243882875913502720/1285312455844827186/images_15.jpg?ex=66f45c01&is=66f30a81&hm=ddebcc41d196a6a2c844e7ce31a786da1678e9f500b2d805604d4d500b9bd2fe&";
+            result.reaction = "Congratulations, you pulled the bad ending.";
+            result.color = new Color(0, 255, 251);
+            AllResults.newResults.Add(result);
+
+            result.name = "Gege Akutami";
+            result.imageURL = "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fd/Gege_Akutami.png/revision/latest/scale-to-width-down/200?cb=20181003050746";
+            result.reaction = "Gege when I catch you Gege";
+            result.color = new Color(255, 255, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Literally Everything";
+            result.imageURL = null;
+            result.reaction = "I can't even give you a picture of it";
+            result.color = new Color(255, 255, 255);
+            AllResults.newResults.Add(result);
+
+            result.name = "Kayoko shooting you";
+            result.imageURL = "https://cdn.donmai.us/sample/85/f7/__kayoko_and_kayoko_blue_archive_drawn_by_fujifuji0330__sample-85f7e33378bc6441c771a45f70d2d025.jpg";
+            result.reaction = "You've been hit by, you've been struck by, a cutie.";
+            result.color = new Color(255, 252, 232);
+            AllResults.newResults.Add(result);
+
+            result.name = "Chibi Huohuo";
+            result.imageURL = "https://i.redd.it/qepejfnkc08c1.png";
+            result.reaction = "Green creature";
+            result.color = new Color(142, 209, 152);
+            AllResults.newResults.Add(result);
+
+            result.name = "Porn";
+            result.imageURL = "https://media1.tenor.com/m/LSXff3TbiWwAAAAd/you-are-not-normal-meme.gif";
+            result.reaction = "This is no normal pull result...";
+            result.color = new Color(0, 0, 0);
+            AllResults.newResults.Add(result);
+
+            result.name = "Unusual Hilichurl";
+            result.imageURL = "https://static.wikia.nocookie.net/gensin-impact/images/a/ae/Enemy_Unusual_Hilichurl.png/revision/latest/scale-to-width-down/1000?cb=20210507082406";
+            result.reaction = "...Hear me out";
+            result.color = new Color(255, 242, 222);
+            AllResults.newResults.Add(result);
+
+            result.name = "Rappa";
+            result.imageURL = "https://i.redd.it/zrzraf7oc7ld1.jpeg";
+            result.reaction = "Totally not Mori Calliope";
+            result.color = new Color(255, 31, 83);
+            AllResults.newResults.Add(result);
+
+            result.name = "Embryo of Philosophy, Sunday";
+            result.imageURL = "https://static1.thegamerimages.com/wordpress/wp-content/uploads/2024/05/honkai-star-rail-sunday-boss-fight-start-scene.jpg";
+            result.reaction = "The Stonehearts stand no chance";
+            result.color = new Color(255, 182, 25);
+            AllResults.newResults.Add(result);
+
+            result.name = "Shampoo";
+            result.imageURL = "https://cdn.discordapp.com/attachments/1199117309508329603/1289056680340095078/74_sin_titulo_20240608135450.png?ex=66f76f16&is=66f61d96&hm=4b7442af7c32ed7dfeeaa2f32a7b1aee0a6317a38aadf4e7e74f99881f5a4e8f&";
+            result.reaction = "Your favorite shady salesman";
+            result.color = new Color(56, 59, 156);
+            AllResults.newResults.Add(result);
+
+            result.name = "Moonlit Dancer Luna";
+            result.imageURL = "https://img10.reactor.cc/pics/post/full/neon-%28pixiv-31150749%29-Anime-Artist-artist-Theresa-Apocalypse-8171119.png";
+            result.reaction = "Rawr";
+            result.color = new Color(184, 0, 21);
+            AllResults.newResults.Add(result);
+
+            result.name = "Brazilian Miku";
+            result.imageURL = "https://img10.joyreactor.cc/pics/post/full/Doodly-Hatsune-Miku-Vocaloid-8564400.jpeg";
+            result.reaction = "Ms. Worldwide";
+            result.color = new Color(71, 255, 221);
+            AllResults.newResults.Add(result);
+
+            result.name = "Ceroba Ketsukane";
+            result.imageURL = "https://preview.redd.it/roba-posting-v0-wdk46wq6jvtc1.jpg?width=736&format=pjpg&auto=webp&s=e2133dd9fd2160bfaa928a952d985094862a2e28";
+            result.reaction = "you're a furry lmao";
+            result.color = new Color(250, 172, 62);
+            AllResults.newResults.Add(result);
+
+            result.name = "Cheesecake";
+            result.imageURL = "https://www.allrecipes.com/thmb/Pld3RNxDK3y7c0ieRqxaiupjvEs=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8419-easy-sour-cream-cheesecake-DDMFS-beauty-4x3-BG-2747-44b427d330aa41aa876269b1249698a0.jpg";
+            result.reaction = "\"The Best Dessert Ever\" - Luna";
+            result.color = new Color(255, 228, 158);
+            AllResults.newResults.Add(result);
+        }
+
+        void CreateStonehearts()
+        {
+            GambleResult result = new GambleResult();
+
+            result.name = "Jade <:Jade_Cornerstone:1287894285240504360>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/6/6d/Character_Jade_Splash_Art.png/revision/latest/scale-to-width-down/1000?cb=20240706170539";
+            result.color = new Color(94, 0, 217);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Obsidian <:Obsidian_Cornerstone:1287894270585475074>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/1/19/NPC_Obsidian.png/revision/latest?cb=20240714050757";
+            result.color = new Color(163, 15, 15);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Opal <:Opal_Cornerstone:1287894245738418256>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/8/82/NPC_Opal.png/revision/latest?cb=20240714052605";
+            result.color = new Color(255, 202, 110);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Pearl <:Pearl_Cornerstone:1287894257419550791>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/7/7e/NPC_Pearl.png/revision/latest?cb=20240714065429";
+            result.color = new Color(224, 252, 255);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Topaz <:Topaz_Cornerstone:1287894297844383744>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/9/9d/Character_Topaz_and_Numby_Splash_Art.png/revision/latest/scale-to-width-down/1000?cb=20231030040101";
+            result.color = new Color(255, 33, 44);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Agate <:Agate_Cornerstone:1287894344052899900>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/d/d0/NPC_Agate.png/revision/latest?cb=20240714051110";
+            result.color = new Color(196, 43, 0);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Amber <:Amber_Cornerstone:1287894316915888220>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/9/90/NPC_Amber.png/revision/latest?cb=20240714050206";
+            result.color = new Color(255, 167, 66);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Sapphire <:Sapphire_Cornerstone:1287894232908038165>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/0/02/NPC_Sapphire.png/revision/latest?cb=20240714043712";
+            result.color = new Color(76, 117, 194);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Sugilite <:Sugilite_Cornerstone:1287894216621559853>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/f/f5/NPC_Sugilite.png/revision/latest?cb=20240714044802";
+            result.color = new Color(135, 52, 199);
+            AllResults.stonehearts.Add(result);
+
+            result.name = "Aventurine <:Aventurine_Cornerstone:1287894329632755754>";
+            result.imageURL = "https://static.wikia.nocookie.net/houkai-star-rail/images/a/a9/Character_Aventurine_Splash_Art.png/revision/latest/scale-to-width-down/1000?cb=20240327104723";
+            result.color = new Color(40, 224, 181);
+            AllResults.stonehearts.Add(result);
         }
 
         static async Task Main(string[] args)
@@ -488,8 +770,9 @@ namespace ScrewllumBot
     public static class AllResults
     {
         public static Dictionary<SocketGuildUser, DateTimeOffset> cooldowns = new Dictionary<SocketGuildUser, DateTimeOffset>();
-        public static Dictionary<ulong, int> pulls = new Dictionary<ulong, int>();
         public static List<GambleResult> allResults = new List<GambleResult>();
+        public static List<GambleResult> newResults = new List<GambleResult>();
+        public static List<GambleResult> stonehearts = new List<GambleResult>();
         public static string[] blacklist;
 
         public static string[] kissGifs = new string[]
@@ -631,7 +914,6 @@ namespace ScrewllumBot
             "USER_1 and USER_2 are reading peak fiction together",
             "USER_1 and USER_2 are frauds",
             "USER_1 and USER_2 are mahjong buddies",
-            "USER_2 killed USER_1 while drunk driving",
             "USER_2 murdered USER_1"
         };
 
@@ -655,13 +937,14 @@ namespace ScrewllumBot
             {
                 string userId = System.IO.File.ReadLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").First();
                 IGuildUser user = null;
-                if (userId != null)
+                if (userId != string.Empty && userId != null)
                 {
                     user = guild.GetUsersAsync().Result.First(x => x.Id.ToString() == userId);
                 }
                 if (user != null)
                 {
-                    await user.RemoveRoleAsync(supremeGamblerRoleId);
+                    if (RemainingStonehearts() > 0)
+                        await user.RemoveRoleAsync(supremeGamblerRoleId);
                 }
             }
             catch (Exception e)
@@ -671,17 +954,70 @@ namespace ScrewllumBot
 
             try
             {
-                using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt"))
+                if (newGambler != null)
                 {
-                    file.Write(newGambler.Id.ToString());
-                    file.Close();
+                    if (!System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").Contains(newGambler.Id.ToString()))
+                    {
+                        if (RemainingStonehearts() > 0)
+                        {
+                            using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt"))
+                            {
+                                file.Write(newGambler.Id.ToString());
+                                file.Close();
+                            }
+                        }
+                        else
+                        {
+                            using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt", true))
+                            {
+                                file.WriteLine(newGambler.Id.ToString());
+                                file.Close();
+                            }
+                        }
+                        await (newGambler as SocketGuildUser).AddRoleAsync(supremeGamblerRoleId);
+                    }
                 }
-                await (newGambler as SocketGuildUser).AddRoleAsync(supremeGamblerRoleId);
+                else
+                {
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public static int RemainingSupremeGamblers()
+        {
+            return System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").Where(x => x != string.Empty).Count();
+        }
+
+        public static async Task<IGuildUser> RemoveRandomSupremeGambler(IUser caller, IGuild guild)
+        {
+            string[] supremeGamblers = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt");
+            if (!supremeGamblers.Contains(caller.Id.ToString()))
+            {
+                return null;
+            }
+            else if (RemainingSupremeGamblers() > 1 && !supremeGamblers.Where(x => x != string.Empty).All(x => x == caller.Id.ToString()))
+            {
+                Random random = new Random();
+                int randomSG = random.Next(supremeGamblers.Length);
+                if (supremeGamblers[randomSG] == caller.Id.ToString() || supremeGamblers[randomSG] == string.Empty)
+                {
+                    randomSG = random.Next(supremeGamblers.Length);
+                }
+                IGuildUser user = (await guild.GetUsersAsync()).First(x => x.Id.ToString() == supremeGamblers[randomSG]);
+                if (user != null)
+                {
+                    if (user.RoleIds.Contains(supremeGamblerRoleId))
+                    {
+                        await user.RemoveRoleAsync(supremeGamblerRoleId);
+                        return user;
+                    }
+                }
+            }
+            return null;
         }
 
         public static async Task<Stream> GetStreamFromUrl(string url)
@@ -694,24 +1030,83 @@ namespace ScrewllumBot
 
             return new MemoryStream(imageData);
         }
+
+        public static async Task SendCooldownMessage(IUser user, IMessageChannel channel)
+        {
+            await Task.Delay(1000);
+            EmbedBuilder gachaEmbed = new EmbedBuilder();
+        }
+
+        public static int RemainingStonehearts()
+        {
+            string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt");
+            int remaining = 10;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i] != string.Empty)
+                    remaining--;
+            }
+            return remaining;
+        }
+
+        public static string FirstObtainerStoneheartPing(int index)
+        {
+            string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt");
+            if (lines[index] == string.Empty)
+                return string.Empty;
+            return $"<@{lines[index].Split(' ')[0]}>";
+        }
+
+        public static string DupesStoneheartPing(int index)
+        {
+            string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt");
+            string[] split = lines[index].Split(' ');
+            Dictionary<string, int> dupes = new Dictionary<string, int>(); 
+            string result = string.Empty;
+            if (split.Length <= 1)
+            {
+                return string.Empty;
+            }
+            for (int i = 1; i < split.Length; i++)
+            {
+                if (dupes.ContainsKey(split[i]))
+                {
+                    dupes[split[i]]++;
+                } 
+                else
+                {
+                    dupes.Add(split[i], 1);
+                }
+            }
+            if (dupes.Count > 1)
+            {
+                for (int i = 0; i < dupes.Count - 1; i++)
+                {
+                    Console.WriteLine("ccc");
+                    result += $"<@{dupes.ElementAt(i).Key}> x{dupes.ElementAt(i).Value}, ";
+                }
+            }
+            result += $"<@{dupes.ElementAt(dupes.Count - 1).Key}> x{dupes.ElementAt(dupes.Count - 1).Value}";
+            return result;
+        }
     }
 
     public class SlashCommands : InteractionModuleBase
     {
         int buddyzoneCommandsCooldown = 30;
+        int maxPulls = 40;
 
         [SlashCommand("pull", "Do some gambling")]
         public async Task Pull()    
         {
-            if (Context.Channel.Id == 1171251045947682876)
+            if (Context.Channel.Id != 1286801789458579497 && Context.Guild.Id == 1171235275020714036)
             {
-                await RespondAsync("You can't use this command in #buddy-zone", ephemeral: true);
+                await RespondAsync("You can't use this command outside <#1286801789458579497>", ephemeral: true);
                 return;
             }
-
             if (AllResults.cooldowns.ContainsKey(Context.User as SocketGuildUser))
             {
-                if (AllResults.cooldowns[Context.User as SocketGuildUser].AddSeconds(10) >= DateTimeOffset.UtcNow)
+                if (AllResults.cooldowns[Context.User as SocketGuildUser].AddSeconds(1) >= DateTimeOffset.UtcNow)
                 {
                     await RespondAsync("You're using the bot too often!", ephemeral: true);
                     return;
@@ -726,100 +1121,388 @@ namespace ScrewllumBot
                 AllResults.cooldowns.Add(Context.User as SocketGuildUser, DateTimeOffset.UtcNow);
             }
 
-            foreach (string line in System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt"))
+            string[] gachaCounterLines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt");
+            int pullsDone = 0;
+
+            if (!gachaCounterLines.Any(x => x.Split(' ')[0] == Context.User.Id.ToString()))
             {
+                using (StreamWriter writer = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", true))
+                {
+                    await writer.WriteLineAsync($"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} 0");
+                    writer.Close();
+                }
+                gachaCounterLines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt");
+            }
+
+            for (int i = 0; i < gachaCounterLines.Length; i++)
+            {
+                string line = gachaCounterLines[i];
                 string[] separate = line.Split(' ');
                 if (separate[0] == Context.User.Id.ToString())
                 {
                     DateTimeOffset lastUsed = new DateTimeOffset(long.Parse(separate[1]), new TimeSpan(0));
-                    if (lastUsed.AddHours(12) >= DateTimeOffset.UtcNow)
+                    pullsDone = int.Parse(separate[2]);
+                    if (pullsDone >= maxPulls)
                     {
-                        await RespondAsync($"Take a break. Your break will end on <t:{lastUsed.AddHours(12).ToUnixTimeSeconds()}>.", ephemeral: true);
-                        return;
-                    }
-                    else
-                    {
-                        var lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt");
-                        var newLines = lines.Select(oneLine => Regex.Replace(oneLine, $"\\s*{Context.User.Id.ToString()}.*", string.Empty));
-                        System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", newLines);
+                        if (lastUsed.AddHours(1) >= DateTimeOffset.UtcNow)
+                        {
+                            await RespondAsync($"Take a break. Your break will end <t:{lastUsed.AddHours(1).ToUnixTimeSeconds()}:R>.", ephemeral: true);
+                            return;
+                        }
+                        else
+                        {
+                            pullsDone = 0;
+                            line = $"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} {pullsDone}";
+                            gachaCounterLines[i] = line;
+                            System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", gachaCounterLines);
+                        }
                     }
                     break;
                 }
             }
 
-            if (!AllResults.pulls.ContainsKey(Context.User.Id))
-            {
-                Console.WriteLine("Their first pull");
-                AllResults.pulls.Add(Context.User.Id, 0);
-            }
-
-            Console.WriteLine($"{Context.User.Username} used /pull in #{Context.Channel.Name} at {DateTimeOffset.UtcNow.ToString()}. They've done {AllResults.pulls[Context.User.Id]} pulls so far");
+            Console.WriteLine($"{Context.User.Username} used /pull in #{Context.Channel.Name} at {DateTimeOffset.UtcNow.ToString()}. They've done {pullsDone++} pulls so far");
 
             Random random = new Random();
             EmbedBuilder gachaEmbed = new EmbedBuilder();
-            gachaEmbed.Color = new Color(random.Next(256), random.Next(256), random.Next(256));
-            gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + "'s gambling";
-            gachaEmbed.Description = "*Who shall it be?*";
             EmbedFooterBuilder gachaFooter = new EmbedFooterBuilder();
             gachaFooter.WithText("Used by " + Context.User.Username);
             gachaFooter.WithIconUrl(Context.User.GetAvatarUrl());
             gachaEmbed.WithFooter(gachaFooter);
-            gachaEmbed.ImageUrl = "https://media1.tenor.com/m/Cv02PNW6okUAAAAd/star-rail-pull-animation-honkai-star-rail.gif";
-            await RespondAsync(embed: gachaEmbed.Build());
-            AllResults.pulls[Context.User.Id]++;
+            try
+            {
+                if (!System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt").Contains(Context.User.Id.ToString()))
+                {
+                    gachaEmbed.Color = new Color(random.Next(256), random.Next(256), random.Next(256));
+                    gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + "'s gambling";
+                    gachaEmbed.ImageUrl = "https://media1.tenor.com/m/Cv02PNW6okUAAAAd/star-rail-pull-animation-honkai-star-rail.gif";
+                    gachaEmbed.Description = "*Who shall it be?*";
+                    await RespondAsync(embed: gachaEmbed.Build());
 
-            await Task.Delay(7500);
+                    await Task.Delay(7500);
+                }
+                else
+                {
+                    gachaEmbed.Color = new Color(random.Next(256), random.Next(256), random.Next(256));
+                    gachaEmbed.Title = "Skipping cutscene...";
+                    await RespondAsync(embed: gachaEmbed.Build());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                await RespondAsync(e.ToString());
+            }
 
-            GambleResult result = AllResults.allResults[random.Next(AllResults.allResults.Count)];
+
+            gachaCounterLines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt");
+            for (int i = 0; i < gachaCounterLines.Length; i++)
+            {
+                string line = gachaCounterLines[i];
+                string[] separate = line.Split(' ');
+                if (separate[0] == Context.User.Id.ToString())
+                {
+                    DateTimeOffset lastUsed = new DateTimeOffset(long.Parse(separate[1]), new TimeSpan(0));
+                    pullsDone = int.Parse(separate[2]);
+                    if (pullsDone >= maxPulls)
+                    {
+                        if (lastUsed.AddHours(1) < DateTimeOffset.UtcNow)
+                        {
+                            pullsDone = 0;
+                            line = $"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} {pullsDone}";
+                            gachaCounterLines[i] = line;
+                            System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", gachaCounterLines);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            GambleResult result = new GambleResult();
+
+            if (AllResults.RemainingStonehearts() > 0)
+                result = AllResults.allResults[random.Next(AllResults.allResults.Count)];
+            else
+                result = AllResults.newResults[random.Next(AllResults.newResults.Count)];
 
             gachaEmbed = new EmbedBuilder();
             gachaFooter = new EmbedFooterBuilder();
-            gachaFooter.WithText("Used by " + Context.User.Username);
+            gachaFooter.WithText("Used by " + Context.User.Username + $" - {maxPulls - pullsDone - 1} pulls left");
             gachaFooter.WithIconUrl(Context.User.GetAvatarUrl());
             gachaEmbed.WithFooter(gachaFooter);
 
+            bool userHasSG = false;
 
-            if (AllResults.pulls[Context.User.Id] == 40)
+            if (System.IO.File.ReadAllText("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt") != string.Empty)
             {
-                using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", true))
-                {
-                    file.WriteLine($"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks.ToString()}");
-                    file.Close();
-                }
+                userHasSG = System.IO.File.ReadLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").First() == Context.User.Id.ToString();
+            }
 
-                gachaEmbed.Title = $"Take a break, {(Context.User as SocketGuildUser).DisplayName}.";
-                gachaEmbed.ImageUrl = "https://media1.tenor.com/m/HItBOocy6ikAAAAC/umaru-sleeping.gif";
-                gachaEmbed.Description = "You can't pull for the next **12** hours. Gambling addiction is bad.";
-                gachaEmbed.Color = new Color(74, 81, 99);
+            if (random.Next(1000) <= 2)
+            {
+                int randomStoneheart = random.Next(AllResults.stonehearts.Count);
+                if (AllResults.RemainingStonehearts() > 0)
+                    randomStoneheart = 2;
+                bool firstObtainer = false;
+                string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt");
+                if (lines[randomStoneheart] == string.Empty)
+                {
+                    lines[randomStoneheart] = Context.User.Id.ToString();
+                    firstObtainer = true;
+                } 
+                else
+                {
+                    lines[randomStoneheart] += $" {Context.User.Id}";
+                }
+                System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt", lines);
+
+                gachaEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} pulled {AllResults.stonehearts[randomStoneheart].name}";
+                gachaEmbed.Color = AllResults.stonehearts[randomStoneheart].color;
+                gachaEmbed.ImageUrl = AllResults.stonehearts[randomStoneheart].imageURL;
+                if (firstObtainer)
+                    gachaEmbed.Description = $"***One of the Ten Stonehearts has been pulled. {AllResults.RemainingStonehearts()} Stonehearts remain.***";
+                else
+                    gachaEmbed.Description = $"***One of the Ten Stonehearts has been pulled, again. {AllResults.RemainingStonehearts()} Stonehearts still remain... (Dupe)***";
+
                 await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
 
-                AllResults.pulls[Context.User.Id] = 0;
-                return;
-            }
-            if (random.Next(40) == 0 && Context.Guild.Id == 1171235275020714036)
+                if (AllResults.RemainingStonehearts() <= 0 && firstObtainer)
+                {
+                    EmbedBuilder finalStoneheartEmbed = new EmbedBuilder();
+                    finalStoneheartEmbed.Title = "All Stonehearts have been collected...";
+                    finalStoneheartEmbed.ImageUrl = "https://static.wikia.nocookie.net/houkai-star-rail/images/4/4f/NPC_Diamond.png/revision/latest/scale-to-width-down/1000?cb=20240716082630";
+                    finalStoneheartEmbed.Description = "**All Ten Stonehearts have been acquired. With their power, the Supreme Gambler role shall never be revoked, allowing for all of us to be Supreme Gamblers.** " +
+                        "\n***Welcome to the next chapter.***";
+                    finalStoneheartEmbed.Color = new Color(255, 255, 255);
+
+                    await ReplyAsync(text: "<@&1287418959737655298>", embed: finalStoneheartEmbed.Build());
+                }
+                else if (firstObtainer)
+                    await ReplyAsync(text: "<@&1287418959737655298> a new Stoneheart has been obtained!");
+            }/*
+            else if (random.Next(100) <= 0 && Context.Guild.Id == 1171235275020714036)
             {
                 await AllResults.ReassignSupremeGambler(Context.User, Context.Guild);
                 gachaEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} has become the Supreme Gambler";
                 gachaEmbed.ImageUrl = "https://media1.tenor.com/m/RH8UiFC-aFwAAAAC/aventurine-aventurine-hsr.gif";
                 gachaEmbed.Description = "***You are now the new bearer of the Supreme Gambler role***";
+                if (userHasSG)
+                {
+                    gachaEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} has become the Supreme Gambler... Again?";
+                    gachaEmbed.ImageUrl = "https://media1.tenor.com/m/qDMumw7jgFUAAAAC/aventurine-aventurine-hsr.gif";
+                    gachaEmbed.Description = "***Nothing changed... But this sure is a flex.***";
+                }
                 gachaEmbed.Color = new Color(255, 215, 0);
                 await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
-                return;
+            }*/
+            else if (random.Next(100) <= 0 && Context.Guild.Id == 1171235275020714036 && AllResults.RemainingSupremeGamblers() > 1)
+            {
+                if (userHasSG)
+                {
+                    IGuildUser removedUser = null;
+                    try
+                    {
+                        removedUser = await AllResults.RemoveRandomSupremeGambler(Context.User, Context.Guild);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        await RespondAsync("<@904745046329397249> " + e.ToString());
+                    }
+                    if (removedUser == null)
+                    {
+                        await RespondAsync("*Something went really wrong! <@904745046329397249>*");
+                    }
+
+                    string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt");
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (lines[i] == removedUser.Id.ToString())
+                        {
+                            lines[i] = string.Empty;
+                            break;
+                        }
+                    }
+                    System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt", lines);
+
+                    gachaEmbed.Title = $"{removedUser.DisplayName}, one of the Supreme Gamblers, has been defeated.";
+                    gachaEmbed.ImageUrl = "https://media1.tenor.com/m/w2vZuAMZ5yQAAAAd/honkai-star-rail-acheron.gif";
+                    gachaEmbed.Description = $"***{AllResults.RemainingSupremeGamblers()} Supreme Gamblers remain.***";
+                    gachaEmbed.Color = new Color(145, 0, 39);
+                    await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
+                    await ReplyAsync(removedUser.Mention + ", you have lost Supreme Gambler.");
+
+                    /*try
+                    {
+                        await AllResults.ReassignSupremeGambler(null, Context.Guild);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        await RespondAsync("<@904745046329397249> " + e.ToString());
+                    }
+                    gachaEmbed.Title = "The Supreme Gambler has been defeated.";
+                    gachaEmbed.ImageUrl = "https://media1.tenor.com/m/w2vZuAMZ5yQAAAAd/honkai-star-rail-acheron.gif";
+                    gachaEmbed.Description = "***The Supreme Gambler role has been revoked...***";
+                    gachaEmbed.Color = new Color(145, 0, 39);
+                    await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build()); */
+                }
             }
-            if (random.Next(500) <= 2)
+            else if (random.Next(500) <= 2)
             {
                 gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + $" pulled... {(Context.User as SocketGuildUser).DisplayName}?";
                 gachaEmbed.ImageUrl = (Context.User as SocketGuildUser).GetDisplayAvatarUrl();
                 gachaEmbed.Description = "It's you!";
                 gachaEmbed.Color = new Color(random.Next(255), random.Next(255), random.Next(255));
                 await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
+            }
+            else
+            {
+                gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + " pulled " + result.name;
+                gachaEmbed.ImageUrl = result.imageURL;
+                gachaEmbed.Description = result.reaction;
+                gachaEmbed.Color = result.color;
+                await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
+            }
+
+            for (int i = 0; i < gachaCounterLines.Length; i++)
+            {
+                string line = gachaCounterLines[i];
+                string[] separate = line.Split(' ');
+                if (separate[0] == Context.User.Id.ToString())
+                {
+                    DateTimeOffset lastUsed = new DateTimeOffset(long.Parse(separate[1]), new TimeSpan(0));
+                    pullsDone = int.Parse(separate[2]);
+                    if (pullsDone > maxPulls)
+                    {
+                        if (lastUsed.AddHours(1) >= DateTimeOffset.UtcNow)
+                        {
+                            await RespondAsync($"Take a break. Your break will end <t:{lastUsed.AddHours(1).ToUnixTimeSeconds()}:R>.", ephemeral: true);
+                            return;
+                        }
+                        else
+                        {
+                            pullsDone = 1;
+                            line = $"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} {pullsDone}";
+                        }
+                    }
+                    else
+                    {
+                        if (lastUsed.AddHours(1) >= DateTimeOffset.UtcNow)
+                        {
+                            pullsDone++;
+                            line = $"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} {pullsDone}";
+                        }
+                        else
+                        {
+                            pullsDone = 1;
+                            line = $"{Context.User.Id.ToString()} {DateTimeOffset.UtcNow.Ticks} {pullsDone}";
+                        }
+                    }
+                    gachaCounterLines[i] = line;
+                    System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\gachatimeout.txt", gachaCounterLines);
+                    break;
+                }
+            }
+
+            if (pullsDone >= maxPulls)
+            {
+                gachaEmbed.Title = $"Take a break, {(Context.User as SocketGuildUser).DisplayName}.";
+                gachaEmbed.ImageUrl = "https://media1.tenor.com/m/HItBOocy6ikAAAAC/umaru-sleeping.gif";
+                gachaEmbed.Description = "You can't pull for an hour. Gambling addiction is bad.";
+                gachaEmbed.Color = new Color(74, 81, 99);
+                gachaEmbed.Footer = null;
+                await ReplyAsync(embed: gachaEmbed.Build());
+            }
+        }
+
+        [SlashCommand("stonehearts", "Show the currently obtained Stonehearts")]
+        public async Task Stonehearts()
+        {
+            /* await RespondAsync("🤫", ephemeral: true);
+            return; */
+            Console.WriteLine($"{Context.User.Username} used /stonehearts in {Context.Channel.Name}. Remaining stonehearts: {AllResults.RemainingStonehearts()}");
+            try
+            {
+                EmbedBuilder stoneheartEmbed = new EmbedBuilder();
+                stoneheartEmbed.Title = "The Ten Stonehearts";
+                Random random = new Random();
+                stoneheartEmbed.Color = AllResults.stonehearts[random.Next(AllResults.stonehearts.Count)].color;
+                EmbedFieldBuilder field = new EmbedFieldBuilder();
+                for (int i = 0; i < AllResults.stonehearts.Count; i++)
+                {
+                    field = new EmbedFieldBuilder();
+                    field.Name = AllResults.stonehearts[i].name;
+                    if (AllResults.FirstObtainerStoneheartPing(i) == string.Empty)
+                    {
+                        field.Value = "***Unobtained***";
+                    }
+                    else if (AllResults.DupesStoneheartPing(i) == string.Empty)
+                    {
+                        field.Value = $"**Obtained by:** {AllResults.FirstObtainerStoneheartPing(i)}";
+                    }
+                    else
+                    {
+                        field.Value = $"**Obtained by:** {AllResults.FirstObtainerStoneheartPing(i)}\n" +
+                            $"Dupes: {AllResults.DupesStoneheartPing(i)}";
+                    }
+                    stoneheartEmbed.AddField(field);
+                }
+                await RespondAsync(embed: stoneheartEmbed.Build());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                await RespondAsync(e.ToString());
+            }
+        }
+
+        [SlashCommand("supremegamblers", "Show the current supreme gamblers")]
+        public async Task SupremeGamblers()
+        {
+            try
+            {
+                string[] lines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt");
+                string result = string.Empty;
+                foreach (string line in lines)
+                {
+                    result += $"<@{line}>\n";
+                }
+                await RespondAsync(result, ephemeral: true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                await RespondAsync(e.ToString());
+            }
+        }
+
+        [SlashCommand("suggest", "Suggest a pull!")]
+        public async Task Suggest(string name, IAttachment image, string description)
+        {
+            if (image.ContentType.Split('/')[0] != "image")
+            {
+                await RespondAsync("Please put in an image", ephemeral: true);
                 return;
             }
-            gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + " pulled " + result.name;
-            gachaEmbed.ImageUrl = result.imageURL;
-            gachaEmbed.Description = result.reaction;
-            gachaEmbed.Color = result.color;
-            await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
+            try
+            {
+                IGuildUser beanie = await Context.Guild.GetUserAsync(904745046329397249);
+                IMessageChannel beanieChannel = await beanie.CreateDMChannelAsync();
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.Title = $"{(Context.User as SocketGuildUser).DisplayName} suggested {name}";
+                embed.Description = description;
+                embed.ImageUrl = image.Url;
+                Random random = new Random();
+                embed.Color = new Color(random.Next(255), random.Next(255), random.Next(255));
+                await beanieChannel.SendMessageAsync(embed: embed.Build());
+                await RespondAsync("Suggested!", ephemeral: true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                await RespondAsync(e.ToString(), ephemeral: true);
+            }
         }
 
         [SlashCommand("kiss", "Kiss a member")]
@@ -1325,9 +2008,58 @@ namespace ScrewllumBot
             await RespondAsync(embed: embed.Build());
         }
 
-        [SlashCommand("sgicon", "Change the icon of the Supreme Gambler role, if you have it")]
-        public async Task SGIcon(string url)
+        [SlashCommand("skipcutscene", "Allows you to skip the /pull cutscene with Pom-Pom")]
+        public async Task SkipCutscene(bool skip)
         {
+            Console.WriteLine($"{Context.User.Username} used /skipcutscene {skip} in #{Context.Channel.Name}");
+            string fullId = Context.User.Id.ToString();
+            if (skip)
+            {
+                if (System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt").Contains(fullId))
+                {
+                    await RespondAsync("*You are already opted out of the cutscene.*", ephemeral: true);
+                }
+                else
+                {
+                    using (StreamWriter file = new StreamWriter("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt", true))
+                    {
+                        try
+                        {
+                            await file.WriteLineAsync(fullId);
+                            file.Close();
+                            await RespondAsync("*You have been opted out of the cutscene.*", ephemeral: true);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            await RespondAsync(e.ToString(), ephemeral: true);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt").Contains(fullId))
+                {
+                    await RespondAsync("*You are already opted in to the cutscene.*", ephemeral: true);
+                }
+                else
+                {
+                    var newLines = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt").Select(line => Regex.Replace(line, $"^{fullId}\\s*$", string.Empty, RegexOptions.IgnoreCase));
+                    System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\skipcutscene.txt", newLines);
+                    await RespondAsync("*You have been opted in to the cutscene.*", ephemeral: true);
+                }
+            }
+        }
+
+        [SlashCommand("sgicon", "Change the icon of the Supreme Gambler role, if you have it")]
+        public async Task SGIcon(IAttachment attachment)
+        {
+            if (attachment.ContentType.Split('/')[0] != "image")
+            {
+                await RespondAsync("Please put in an image", ephemeral: true);
+                return;
+            }
             IRole role = null;
             try
             {
@@ -1341,7 +2073,7 @@ namespace ScrewllumBot
             {
                 try
                 {
-                    Stream imageStream = await AllResults.GetStreamFromUrl(url);
+                    Stream imageStream = await AllResults.GetStreamFromUrl(attachment.Url);
                     Image iconImage = new Image(imageStream);
                     await role.ModifyAsync(r => r.Icon = iconImage);
                     await RespondAsync("Changed", ephemeral: true);
@@ -1358,10 +2090,60 @@ namespace ScrewllumBot
             }
         }
 
+        [SlashCommand("roll", "Roll a die, d20 by default")]
+        public async Task Roll(string dice = "d20")
+        {
+            Random random = new Random();
+            string[] split = dice.ToLower().Split(new string[] { "d" }, StringSplitOptions.RemoveEmptyEntries);
+            int amount = 1;
+            int diceNumber;
+            if (split.Length < 2)
+            {
+                Console.WriteLine(split[0]);
+                if (!int.TryParse(split[0], out diceNumber))
+                {
+                    await RespondAsync("Please enter a valid dice", ephemeral: true);
+                }
+            }
+            else
+            {
+                Console.WriteLine(split[0]);
+                Console.WriteLine(split[1]);
+                if (!int.TryParse(split[0], out amount))
+                {
+                    await RespondAsync("Please enter a valid dice", ephemeral: true);
+                }
+                if (!int.TryParse(split[1], out diceNumber))
+                {
+                    await RespondAsync("Please enter a valid dice", ephemeral: true);
+                }
+            }
+            int sum = 0;
+            string rolls = string.Empty;
+            for (int i = 0; i < amount; i++)
+            {
+                int randomNumber = random.Next(diceNumber) + 1;
+                rolls += $"{randomNumber} ";
+                sum += randomNumber;
+            }
+            EmbedBuilder rollEmbed = new EmbedBuilder();
+            if (dice.Contains('d'))
+                rollEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} rolling {dice}:";
+            else
+                rollEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} rolling d{dice}:";
+            rollEmbed.Description = $"{rolls}\n**Total: {sum}**";
+            rollEmbed.Color = new Color(random.Next(255), random.Next(255), random.Next(255));
+            await RespondAsync(embed: rollEmbed.Build());
+        }
+
         [SlashCommand("test", "Test command")]
-        public async Task Test(string url)
+        public async Task Test()
         {
             await RespondAsync("nothing to test rn", ephemeral: true);
+            return;
+            string[] lines = new string[9];
+            System.IO.File.WriteAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\stonehearts.txt", lines);
+            await RespondAsync("check it", ephemeral: true);
         }
 
         [SlashCommand("optout", "Prevent others from using the bot with you")]
@@ -1386,7 +2168,7 @@ namespace ScrewllumBot
                 {
                     try
                     {
-                        file.WriteLine(fullId);
+                        await file.WriteLineAsync(fullId);
                         file.Close();
                         AllResults.blacklist = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\blacklist.txt");
                         if (user == null)
@@ -1450,7 +2232,7 @@ namespace ScrewllumBot
                 {
                     try
                     {
-                        file.WriteLine(fullId);
+                        await file.WriteLineAsync(fullId);
                         file.Close();
                         if (user == null)
                             await RespondAsync("*You have been opted in.*", ephemeral: true);
