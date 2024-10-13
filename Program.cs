@@ -1232,13 +1232,9 @@ namespace ScrewllumBot
             gachaEmbed.WithFooter(gachaFooter);
 
             bool userHasSG = false;
+            userHasSG = System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").Contains(Context.User.Id.ToString());
 
-            if (System.IO.File.ReadAllText("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt") != string.Empty)
-            {
-                userHasSG = System.IO.File.ReadLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").First() == Context.User.Id.ToString();
-            }
-
-            if (random.Next(1000) <= 2)
+            if (random.Next(1000) <= 5)
             {
                 int randomStoneheart = random.Next(AllResults.stonehearts.Count);
                 if (AllResults.RemainingStonehearts() > 0)
@@ -1279,8 +1275,8 @@ namespace ScrewllumBot
                 }
                 else if (firstObtainer)
                     await ReplyAsync(text: "<@&1287418959737655298> a new Stoneheart has been obtained!");
-            }/*
-            else if (random.Next(100) <= 0 && Context.Guild.Id == 1171235275020714036)
+            }
+            else if (random.Next(100) <= 0 && Context.Guild.Id == 1171235275020714036 /*&& AllResults.RemainingSupremeGamblers() <= 1*/)
             {
                 await AllResults.ReassignSupremeGambler(Context.User, Context.Guild);
                 gachaEmbed.Title = $"{(Context.User as SocketGuildUser).DisplayName} has become the Supreme Gambler";
@@ -1294,10 +1290,10 @@ namespace ScrewllumBot
                 }
                 gachaEmbed.Color = new Color(255, 215, 0);
                 await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
-            }*/
-            else if (random.Next(100) <= 0 && Context.Guild.Id == 1171235275020714036 && AllResults.RemainingSupremeGamblers() > 1)
+            }/*
+            else if (random.Next(100) <= 1 && Context.Guild.Id == 1171235275020714036 && AllResults.RemainingSupremeGamblers() > 1)
             {
-                if (userHasSG)
+                if (userHasSG && AllResults.RemainingSupremeGamblers() > 1)
                 {
                     IGuildUser removedUser = null;
                     try
@@ -1331,8 +1327,20 @@ namespace ScrewllumBot
                     gachaEmbed.Color = new Color(145, 0, 39);
                     await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
                     await ReplyAsync(removedUser.Mention + ", you have lost Supreme Gambler.");
+                    if (AllResults.RemainingSupremeGamblers() <= 1)
+                    {
+                        EmbedBuilder gamblingEmbed = new EmbedBuilder();
+                        gamblingEmbed.Title = "There is only one Supreme Gambler left...";
+                        gamblingEmbed.ImageUrl = "https://media1.tenor.com/m/Ni2iuO38YuYAAAAC/aventurine-hsr.gif";
+                        gamblingEmbed.Description = $"**<@{System.IO.File.ReadAllLines("C:\\Users\\kuzzz\\source\\repos\\ScrewllumBot\\ScrewllumBot\\supremegambler.txt").First(x => x != string.Empty)}> has become the *Absolute Gambler***";
+                        gamblingEmbed.Color = new Color(255, 215, 0);
+                        await ReplyAsync(text: $"<@&1287418959737655298>", embed: gamblingEmbed.Build());
+                    }
 
-                    /*try
+                }
+                else if (!userHasSG && AllResults.RemainingSupremeGamblers() <= 1)
+                {
+                    try
                     {
                         await AllResults.ReassignSupremeGambler(null, Context.Guild);
                     }
@@ -1345,9 +1353,9 @@ namespace ScrewllumBot
                     gachaEmbed.ImageUrl = "https://media1.tenor.com/m/w2vZuAMZ5yQAAAAd/honkai-star-rail-acheron.gif";
                     gachaEmbed.Description = "***The Supreme Gambler role has been revoked...***";
                     gachaEmbed.Color = new Color(145, 0, 39);
-                    await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build()); */
+                    await ModifyOriginalResponseAsync(msg => msg.Embed = gachaEmbed.Build());
                 }
-            }
+            }*/
             else if (random.Next(500) <= 2)
             {
                 gachaEmbed.Title = (Context.User as SocketGuildUser).DisplayName + $" pulled... {(Context.User as SocketGuildUser).DisplayName}?";
@@ -1642,7 +1650,7 @@ namespace ScrewllumBot
                 await RespondAsync(embed: embedToSend.Build());
                 return;
             }
-            if (AllResults.punchCounter == 24 || (AllResults.punchCounter == 0 && random.Next(10) == 0))
+            if (random.Next(5) == 0)
             {
                 embedToSend.Description = Context.User.Mention + " uses Black Flash on " + user.Mention;
                 embedToSend.ImageUrl = "https://cdn.discordapp.com/attachments/1285365379438477403/1285389220168597504/itadori-itadori-yuji.gif?ex=66ea177f&is=66e8c5ff&hm=0c88bb6ebdaeb1fcc36fe7c6358fe6a34912d6559d63914e5fbfca3bad6ebaa0&";
